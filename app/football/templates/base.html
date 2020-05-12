@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<head>
+    
+  {% block title %}
+      <title></title>
+  {% endblock title %}
+      
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-dark bg-dark">
+            <a class="navbar-brand" href="{% url 'homepage' %}">Home</a>
+            {% for tag in tags %}
+            <a href="{{ tag.get_absolute_url }}">{{ tag.name }}</a>
+            {% endfor %}
+        </nav>
+    </header>
+    {% block content %}
+        
+    {% endblock content %}
+        
+</body>
