@@ -9,6 +9,34 @@
     {% block content %}
         <h2>{{ post.title }}</h2><br>
         <img src="{{ post.image.url }}" alt="" height="400" width="500"><br>
-        <p>{{ post.body }}</p>
+        <p>{{ post.body }}</p><br>
+        {{ post.likes.count }}
+        <a href="#" onclick="document.getElementById('like').submit()">like</a>
+        <form id="like" method="POST" action="{% url 'detail_like' post.slug %}">
+            {% csrf_token %}
+            <input type="hidden">
+        </form>
+        <br>
+        <form method="POST" action="{% url 'comment' post.slug %}">
+            {% csrf_token %}
+            {% for field in comment_form %}
+                <div>
+                    {{field}}
+                </div>
+            {% endfor %}
+            <input type="submit">
+        </form>
+        <br>
+        <div class="comment" style="padding: 10px;">
+            {% for comment in comments %}
+              <p class="font-weight-bold">
+                {{comment.username}}
+                <span class="text-muted font-weight-normal">
+                    {{comment.time}}
+                </span>
+              </p>
+              {{comment.body | linebreaks}}
+            {% endfor %}
+        </div>
     {% endblock content %}
 </body>    

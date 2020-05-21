@@ -11,7 +11,18 @@
       <h1>{{ post.title }}</h1><br>
       <img src="{{ post.image.url }}" alt="Smiley face" height="150" width="200"><br>
       <p>{{ post.summery }}</p>
-      <a href="{{ post.get_absolute_url }}">edame matlab</a>  
+      <a href="{{ post.get_absolute_url }}">edame matlab</a>
+      <br>
+      {% if user.is_authenticated %}
+      <a href="#" onclick="document.getElementById('like').submit()">like</a>
+      <form id="like" method="POST" action="{% url 'like' post.slug  %}">
+          {% csrf_token %}
+          <input type="hidden">
+      </form>
+      {{ post.likes.count }}
+      {% endif %}
+
+         
     {% endfor %}
   {% endblock content %}
 </body> 
